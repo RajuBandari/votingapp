@@ -1,9 +1,12 @@
-FROM ubuntu
+FROM python:3.6
 
-RUN apt-get update
-RUN apt-get install -y python3 python3-pip
-RUN pip3 install flask
+WORKDIR /app
 
-COPY . /opt/
+COPY requirements.txt /app
+RUN pip3 install -r requirements.txt
 
-ENTRYPOINT FLASK_APP=/opt/main.py flask run --host=0.0.0.0
+EXPOSE 5000
+
+COPY . /app
+
+ENTRYPOINT FLASK_APP=/app/main.py flask run --host=0.0.0.0
